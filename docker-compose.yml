@@ -40,33 +40,3 @@ services:
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:29092 --list
       "
-
-  orders-producer:
-    container_name: orders-service
-    build:
-      context: ./orders
-      dockerfile: Dockerfile
-    depends_on:
-      init-kafka:
-        condition: service_completed_successfully
-    restart: on-failure
-
-  inventories-consumer:
-    container_name: inventories-service
-    build:
-      context: ./inventories
-      dockerfile: Dockerfile
-    depends_on:
-      init-kafka:
-        condition: service_completed_successfully
-    restart: on-failure
-
-  notifications-consumer:
-    container_name: notification-service
-    build:
-      context: ./notifications
-      dockerfile: Dockerfile
-    depends_on:
-      init-kafka:
-        condition: service_completed_successfully
-    restart: on-failure
