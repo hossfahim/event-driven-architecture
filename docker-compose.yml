@@ -40,3 +40,15 @@ services:
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:29092 --list
       "
+
+  frontend:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "8000:8000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "npm install --silent && npm run dev -- --host 0.0.0.0 --port 8000"
